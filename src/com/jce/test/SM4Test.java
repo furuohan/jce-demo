@@ -1,5 +1,4 @@
-package com.company.test.test;
-
+package jce.test;
 
 import com.provider.BaseProvider;
 
@@ -9,7 +8,7 @@ import javax.crypto.SecretKey;
 import java.security.Security;
 import java.util.Arrays;
 
-public class SSF33Test {
+public class SM4Test {
 
     public static void main(String[] args) throws Exception {
         //需要加密的数据
@@ -18,7 +17,7 @@ public class SSF33Test {
         BaseProvider myprovider = new BaseProvider();    //申请provider
         Security.addProvider(myprovider);                    //嵌入provider
         //获取钥匙对
-        KeyGenerator keyGenerator = KeyGenerator.getInstance("SSF33",myprovider);
+        KeyGenerator keyGenerator = KeyGenerator.getInstance("SM4",myprovider);
         keyGenerator.init(128);
 
         SecretKey secretKey = keyGenerator.generateKey();
@@ -27,13 +26,13 @@ public class SSF33Test {
         System.out.println("key:"+ secretKey.getEncoded());
 
         //开始加密过程
-        Cipher cipher = Cipher.getInstance("SSF33", myprovider);
+        Cipher cipher = Cipher.getInstance("SM4", myprovider);
         cipher.init(Cipher.ENCRYPT_MODE, secretKey);
         byte[] tTemp = cipher.doFinal(plain);
-        System.out.println("加密结果"+ Arrays.toString(tTemp));
+        System.out.println("加密结果"+Arrays.toString(tTemp));
 
         //开始解密过程
-        cipher = Cipher.getInstance("SSF33", myprovider);
+        cipher = Cipher.getInstance("SM4", myprovider);
         cipher.init(Cipher.DECRYPT_MODE, secretKey);
         byte[] tResult = cipher.doFinal(tTemp);
 

@@ -1,4 +1,4 @@
-package com.company.test.test;
+package jce.test;
 
 import com.provider.BaseProvider;
 import com.util.BytesUtil;
