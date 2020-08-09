@@ -1,10 +1,15 @@
 package jce.test;
 
 
+import com.keystore.SimpleKeyStore;
 import com.provider.BaseProvider;
 import com.util.BytesUtil;
 
 import javax.crypto.Cipher;
+import javax.crypto.SecretKey;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.security.*;
 import java.util.Arrays;
 
@@ -59,6 +64,25 @@ public class SM2Test {
 
             System.out.println("解密结果"+tResult.length + ":" + Arrays.toString(tResult));
             System.out.println("解密"+ new String(tResult));
+
+            SimpleKeyStore simpleKeyStore = SimpleKeyStore.getInstance();
+            simpleKeyStore.setKeyEntry("alias-sm2", new SimpleKeyStore.PublicAndPrivateKeyEntry(publickey, privatekey, "123456".toCharArray()));
+            simpleKeyStore.setKeyEntry("alias-sm2-1", new SimpleKeyStore.PublicAndPrivateKeyEntry(publickey, privatekey, "123456".toCharArray()));
+            simpleKeyStore.setKeyEntry("alias-sm2-2", new SimpleKeyStore.PublicAndPrivateKeyEntry(publickey, privatekey, "123456".toCharArray()));
+            // ....多个密钥
+            simpleKeyStore.store(new FileOutputStream(new File("simple.keystore")), "111".toCharArray());
+
+            SimpleKeyStore simpleKeyStore1 = SimpleKeyStore.load(new FileInputStream(new File("simple.keystore")), "111".toCharArray());
+            SimpleKeyStore.PublicAndPrivateKeyEntry entry = (SimpleKeyStore.PublicAndPrivateKeyEntry) simpleKeyStore1.getKeyEntry("alias-sm2");
+
+            PublicKey publicKey = entry.getPublicKey("123456".toCharArray());
+            PrivateKey privateKey = entry.getPrivateKey("123456".toCharArray());
+            // 原有
+            System.out.println(publickey);
+            System.out.println(privatekey);
+            // 获取
+            System.out.println(publicKey);
+            System.out.println(privateKey);
         }catch (Exception e){
             e.printStackTrace();
         }

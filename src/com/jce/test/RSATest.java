@@ -2,6 +2,7 @@ package jce.test;
 
 
 import com.keystore.JceKeyStore;
+import com.keystore.SimpleKeyStore;
 import com.provider.BaseProvider;
 import com.util.JCEConstant;
 
@@ -9,6 +10,9 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.security.*;
 import java.security.cert.Certificate;
 import java.util.Arrays;
@@ -29,23 +33,34 @@ public class RSATest {
 //		BouncyCastleProvider myprovider = new BouncyCastleProvider();
 		Security.addProvider(myprovider);					//嵌入provider
 
-		//读取rsa keystore，获取私钥
-		KeyStore ks = JceKeyStore.getKeyStore();
-        Key key = ks.getKey(alias, JCEConstant.keyPassword);
+		KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA", myprovider);
+		kpg.initialize(1024);
+		KeyPair keyPair = kpg.generateKeyPair();
+		byte[] temp = crypt(keyPair.getPublic(),myprovider,plain);
+		decrypt(keyPair.getPrivate(),myprovider,temp);
 
-        PrivateKey privateKey = (PrivateKey) key;
+		PublicKey publicKey = keyPair.getPublic();
+		PrivateKey privateKey = keyPair.getPrivate();
 
-		Certificate cf = ks.getCertificate(alias);
-		PublicKey publicKey = cf.getPublicKey();
-		byte[] temp = crypt(publicKey,myprovider,plain);
+		SimpleKeyStore simpleKeyStore = SimpleKeyStore.getInstance();
+		simpleKeyStore.setKeyEntry("alias-rsa", new SimpleKeyStore.PublicAndPrivateKeyEntry(publicKey, privateKey, "123456".toCharArray()));
+		simpleKeyStore.setKeyEntry("alias-rsa-1", new SimpleKeyStore.PublicAndPrivateKeyEntry(publicKey, privateKey, "123456".toCharArray()));
+		simpleKeyStore.setKeyEntry("alias-rsa-2", new SimpleKeyStore.PublicAndPrivateKeyEntry(publicKey, privateKey, "123456".toCharArray()));
+		// ....多个密钥
+		simpleKeyStore.store(new FileOutputStream(new File("simple.keystore")), "111".toCharArray());
 
-		//解密
-		decrypt(privateKey,myprovider,temp);
+		SimpleKeyStore simpleKeyStore1 = SimpleKeyStore.load(new FileInputStream(new File("simple.keystore")), "111".toCharArray());
+		SimpleKeyStore.PublicAndPrivateKeyEntry entry = (SimpleKeyStore.PublicAndPrivateKeyEntry) simpleKeyStore1.getKeyEntry("alias-rsa");
 
-
+		PublicKey publicKey2 = entry.getPublicKey("123456".toCharArray());
+		PrivateKey privateKey2 = entry.getPrivateKey("123456".toCharArray());
+		// 原有
+		System.out.println(publicKey);
+		System.out.println(privateKey);
+		// 获取
+		System.out.println(publicKey2);
+		System.out.println(privateKey2);
 	}
-
-
 
 	public static byte[] crypt(PublicKey publicKey,Provider myprovider,byte[] plain){
 		//开始加密过程

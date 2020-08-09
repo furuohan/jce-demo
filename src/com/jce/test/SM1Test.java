@@ -1,11 +1,15 @@
 package jce.test;
 
 
+import com.keystore.SimpleKeyStore;
 import com.provider.BaseProvider;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.security.Security;
 import java.util.Arrays;
 
@@ -27,6 +31,17 @@ public class SM1Test {
         System.out.println("key:"+ secretKey.getEncoded());
         byte[] encrypts = sm1Encrypt("SM1",plain,secretKey,myprovider);
         sm1Decrypt("SM1",encrypts,secretKey,myprovider);
+
+        SimpleKeyStore simpleKeyStore = SimpleKeyStore.getInstance();
+        simpleKeyStore.setKeyEntry("alias-sm1", new SimpleKeyStore.SecretKeyEntry(secretKey, "123456".toCharArray()));
+        simpleKeyStore.setKeyEntry("alias-sm1-1", new SimpleKeyStore.SecretKeyEntry(secretKey, "123456".toCharArray()));
+        simpleKeyStore.setKeyEntry("alias-sm1-2", new SimpleKeyStore.SecretKeyEntry(secretKey, "123456".toCharArray()));
+        simpleKeyStore.store(new FileOutputStream(new File("simple.keystore")), "111".toCharArray());
+
+        SimpleKeyStore simpleKeyStore1 = SimpleKeyStore.load(new FileInputStream(new File("simple.keystore")), "111".toCharArray());
+        SimpleKeyStore.SecretKeyEntry entry = (SimpleKeyStore.SecretKeyEntry) simpleKeyStore1.getKeyEntry("alias-sm1");
+        SecretKey secretKey1 = entry.getSecretKey("123456".toCharArray());
+        System.out.println(secretKey1);
     }
 
     public static byte[] sm1Encrypt(String type,byte[] source, SecretKey key, BaseProvider provider) throws Exception{
