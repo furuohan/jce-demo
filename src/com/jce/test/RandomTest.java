@@ -11,7 +11,7 @@ import java.security.Security;
  */
 public class RandomTest {
     public static void main(String[] args) throws Exception {
-        //对随机数进行测试
+        //对随机数进行测试setSeed
         BaseProvider provider = new BaseProvider();
         Security.addProvider(provider);
         SecureRandom secureRandom = SecureRandom.getInstance("RND",provider);
