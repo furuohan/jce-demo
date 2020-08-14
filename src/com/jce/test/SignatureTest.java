@@ -12,14 +12,14 @@ public class SignatureTest {
         KeyPair rsaKey = RSATest.readRSAKey();
 //        SM3WithSM2(sm2Key);
 //        SHA1WithSM2(sm2Key);
-        SHA224WithSM2(sm2Key);
+//        SHA224WithSM2(sm2Key);
 //        SHA256WithSM2(sm2Key);
-//        SHA1WithRsa(rsaKey);
+        SHA1WithRsa(rsaKey);
 //        SHA224WithRsa(rsaKey);
 //        SHA256WithRsa(rsaKey);
 //        SHA384WithRsa(rsaKey);
 //        SHA512WithRsa(rsaKey);
-}
+    }
 
     public static void SM3WithSM2(KeyPair keyPair) throws Exception{
         try{
