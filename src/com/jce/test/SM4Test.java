@@ -21,12 +21,11 @@ public class SM4Test {
         BaseProvider myprovider = new BaseProvider();    //申请provider
         Security.addProvider(myprovider);                    //嵌入provider
 
-//        SecretKey key = genkey(myprovider);
-//        saveKeyFactory(key);
-        SecretKey key = readSM1Key();
 
-        byte[] encrypts = encrypt("SM4",plain,key,myprovider);
-        decrypt("SM4",encrypts,key,myprovider);
+        SecretKey readKey = readKey();
+
+        byte[] encrypts = encrypt("SM4",plain,readKey,myprovider);
+        decrypt("SM4",encrypts,readKey,myprovider);
     }
 
 
@@ -39,14 +38,8 @@ public class SM4Test {
         return secretKey;
     }
 
-    public static void saveKeyFactory(SecretKey secretKey) throws Exception{
-        SimpleKeyStore simpleKeyStore = SimpleKeyStore.getInstance();
-        simpleKeyStore.setKeyEntry("alias-sm4", new SimpleKeyStore.SecretKeyEntry(secretKey, "123456".toCharArray()));
-        // ....多个密钥
-        simpleKeyStore.store(new FileOutputStream(new File("simple.keystore")), "111".toCharArray());
-    }
 
-    public static SecretKey readSM1Key ()throws Exception{
+    public static SecretKey readKey ()throws Exception{
 
         SimpleKeyStore simpleKeyStore1 = SimpleKeyStore.load(new FileInputStream(new File("simple.keystore")), "111".toCharArray());
         SimpleKeyStore.SecretKeyEntry entry = (SimpleKeyStore.SecretKeyEntry) simpleKeyStore1.getKeyEntry("alias-sm4");

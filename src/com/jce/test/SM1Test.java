@@ -20,16 +20,13 @@ public class SM1Test {
         byte[] plain = {1, -128, -115, 90, 127, 23, -10, -31, 109, 59, 118, -6, 99, 29, -34, -31};
         BaseProvider myprovider = new BaseProvider();    //申请provider
         Security.addProvider(myprovider);                    //嵌入provider
-
-//        SecretKey key = genkey(myprovider);
-//        saveKeyFactory(key);
         SecretKey key = readSM1Key();
 
         byte[] encrypts = sm1Encrypt("SM1",plain,key,myprovider);
         sm1Decrypt("SM1",encrypts,key,myprovider);
 //
 //
-//
+//na
     }
 
     public static SecretKey genkey(BaseProvider myprovider) throws Exception{
@@ -40,12 +37,6 @@ public class SM1Test {
         return secretKey;
     }
 
-    public static void saveKeyFactory(SecretKey secretKey) throws Exception{
-        SimpleKeyStore simpleKeyStore = SimpleKeyStore.getInstance();
-        simpleKeyStore.setKeyEntry("alias-sm1", new SimpleKeyStore.SecretKeyEntry(secretKey, "123456".toCharArray()));
-        // ....多个密钥
-        simpleKeyStore.store(new FileOutputStream(new File("simple.keystore")), "111".toCharArray());
-    }
 
     public static SecretKey readSM1Key ()throws Exception{
 

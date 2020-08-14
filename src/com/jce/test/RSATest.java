@@ -13,7 +13,6 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.security.*;
 import java.util.Arrays;
 
@@ -25,11 +24,6 @@ public class RSATest {
 		BaseProvider myprovider = new BaseProvider();	//申请provider
 		Security.addProvider(myprovider);//嵌入provider
 
-		//生成公私钥
-//		KeyPair keyPair = genkey(myprovider);
-		//存入本地化文件
-//		saveKeyFactory(keyPair.getPublic(),keyPair.getPrivate());
-
 		//读取公私钥
 		KeyPair keyPair = readRSAKey();
 		//需要加密的数据
@@ -40,12 +34,6 @@ public class RSATest {
 		//解密
 		decrypt(keyPair.getPrivate(),myprovider,temp);
 
-//		System.out.println(Arrays.toString(plain));
-//
-//
-//
-//
-
 	}
 
 	public static KeyPair genkey(BaseProvider myprovider) throws Exception{
@@ -55,12 +43,6 @@ public class RSATest {
 		return keyPair;
 	}
 
-	public static void saveKeyFactory(PublicKey publicKey, PrivateKey privateKey) throws Exception{
-		SimpleKeyStore simpleKeyStore = SimpleKeyStore.getInstance();
-		simpleKeyStore.setKeyEntry("alias-rsa", new SimpleKeyStore.PublicAndPrivateKeyEntry(publicKey, privateKey, "123456".toCharArray()));
-		// ....多个密钥
-		simpleKeyStore.store(new FileOutputStream(new File("simple.keystore")), "111".toCharArray());
-	}
 
 	public static KeyPair readRSAKey ()throws Exception{
         SimpleKeyStore simpleKeyStore1 = SimpleKeyStore.load(new FileInputStream(new File("simple.keystore")), "111".toCharArray());

@@ -21,8 +21,7 @@ public class SM2Test {
 
         BaseProvider myprovider = new BaseProvider();    //申请provider
         Security.addProvider(myprovider);                    //嵌入provider
-//        KeyPair keyPair = genkey(myprovider);
-//        saveKeyFactory(keyPair.getPublic(),keyPair.getPrivate());
+
         KeyPair keyPair = readSM2Key();
         byte[] source = crypt(keyPair.getPublic(),myprovider,plain);
         decrypt(keyPair.getPrivate(),myprovider,source);
@@ -40,12 +39,7 @@ public class SM2Test {
         return outRSAKeyPair;
     }
 
-    public static void saveKeyFactory(PublicKey publicKey, PrivateKey privateKey) throws Exception{
-        SimpleKeyStore simpleKeyStore = SimpleKeyStore.getInstance();
-        simpleKeyStore.setKeyEntry("alias-sm2", new SimpleKeyStore.PublicAndPrivateKeyEntry(publicKey, privateKey, "123456".toCharArray()));
-        // ....多个密钥
-        simpleKeyStore.store(new FileOutputStream(new File("simple.keystore")), "111".toCharArray());
-    }
+
 
     public static KeyPair readSM2Key ()throws Exception{
 
