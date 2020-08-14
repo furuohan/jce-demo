@@ -8,26 +8,24 @@ import java.security.*;
 
 public class SignatureTest {
     public static void main(String[] args) throws Exception {
-//        SM3WithSM2();
-//        SHA1WithSM2();
-        SHA224WithSM2();
-//        SHA256WithSM2();
-//        SHA1WithRsa();
-//        SHA224WithRsa();
-//        SHA256WithRsa();
-//        SHA384WithRsa();
-//        SHA512WithRsa();
+        KeyPair sm2Key = SM2Test.readSM2Key();
+        KeyPair rsaKey = RSATest.readRSAKey();
+//        SM3WithSM2(sm2Key);
+//        SHA1WithSM2(sm2Key);
+        SHA224WithSM2(sm2Key);
+//        SHA256WithSM2(sm2Key);
+//        SHA1WithRsa(rsaKey);
+//        SHA224WithRsa(rsaKey);
+//        SHA256WithRsa(rsaKey);
+//        SHA384WithRsa(rsaKey);
+//        SHA512WithRsa(rsaKey);
+}
 
-    }
-
-    public static void SM3WithSM2(){
+    public static void SM3WithSM2(KeyPair keyPair) throws Exception{
         try{
             String data ="12345678912345612342141242131232";            //只能32位
             BaseProvider provider = new BaseProvider();
             Security.addProvider(provider);
-            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("SM2",provider); //生成RSA钥匙对
-            keyPairGenerator.initialize(256);
-            KeyPair keyPair = keyPairGenerator.genKeyPair();
             System.out.println(keyPair.getPublic().toString());
             System.out.println(keyPair.getPrivate().toString());
             Signature signature = Signature.getInstance("SM3WithSM2",provider);  //进行签名
@@ -58,14 +56,11 @@ public class SignatureTest {
         }
     }
 
-    public static void SHA1WithSM2(){
+    public static void SHA1WithSM2(KeyPair keyPair) throws Exception{
         try{
             String data ="12345678912345612342141242131232";            //只能32位
             BaseProvider provider = new BaseProvider();
             Security.addProvider(provider);
-            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("SM2",provider); //生成SM2钥匙对
-            keyPairGenerator.initialize(256);
-            KeyPair keyPair = keyPairGenerator.genKeyPair();
             System.out.println(keyPair.getPublic().toString());
             System.out.println(keyPair.getPrivate().toString());
             Signature signature = Signature.getInstance("SHA1WithSM2",provider);  //进行签名
@@ -96,14 +91,11 @@ public class SignatureTest {
         }
     }
 
-    public static void SHA224WithSM2(){
+    public static void SHA224WithSM2(KeyPair keyPair){
         try{
             String data ="12345678912345612342141242131232";
             BaseProvider provider = new BaseProvider();
             Security.addProvider(provider);
-            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("SM2",provider); //生成SM2钥匙对
-            keyPairGenerator.initialize(256);
-            KeyPair keyPair = keyPairGenerator.genKeyPair();
             System.out.println(keyPair.getPublic().toString());
             System.out.println(keyPair.getPrivate().toString());
             Signature signature = Signature.getInstance("SHA224WithSM2",provider);  //进行签名
@@ -134,14 +126,11 @@ public class SignatureTest {
         }
     }
 
-    public static void SHA256WithSM2(){
+    public static void SHA256WithSM2(KeyPair keyPair){
         try{
             String data ="12345678912345612342141242131232";
             BaseProvider provider = new BaseProvider();
             Security.addProvider(provider);
-            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("SM2",provider); //生成SM2钥匙对
-            keyPairGenerator.initialize(256);
-            KeyPair keyPair = keyPairGenerator.genKeyPair();
             System.out.println(keyPair.getPublic().toString());
             System.out.println(keyPair.getPrivate().toString());
             Signature signature = Signature.getInstance("SHA256WithSM2",provider);  //进行签名
@@ -173,14 +162,11 @@ public class SignatureTest {
     }
 
 
-    public static void SHA1WithRsa(){
+    public static void SHA1WithRsa(KeyPair keyPair){
         try{
             String data ="12345678912345612342141242131232";            //只能32位
             BaseProvider provider = new BaseProvider();
             Security.addProvider(provider);
-            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA",provider); //生成RSA钥匙对
-            keyPairGenerator.initialize(1024);
-            KeyPair keyPair = keyPairGenerator.genKeyPair();
             System.out.println(keyPair.getPublic().toString());
             System.out.println(keyPair.getPrivate   ().toString());
             Signature signature = Signature.getInstance("SHA1WithRSA",provider);  //进行签名
@@ -211,14 +197,11 @@ public class SignatureTest {
         }
     }
 
-    public static void SHA224WithRsa(){
+    public static void SHA224WithRsa(KeyPair keyPair){
         try{
             String data ="12345678912345612342141242131232";            //只能32位
             BaseProvider provider = new BaseProvider();
             Security.addProvider(provider);
-            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA",provider); //生成RSA钥匙对
-            keyPairGenerator.initialize(1024);
-            KeyPair keyPair = keyPairGenerator.genKeyPair();
             System.out.println(keyPair.getPublic().toString());
             System.out.println(keyPair.getPrivate   ().toString());
             Signature signature = Signature.getInstance("SHA224WithRSA",provider);  //进行签名
@@ -249,14 +232,11 @@ public class SignatureTest {
         }
     }
 
-    public static void SHA256WithRsa(){
+    public static void SHA256WithRsa(KeyPair keyPair){
         try{
             String data ="12345678912345612342141242131232";            //只能32位
             BaseProvider provider = new BaseProvider();
             Security.addProvider(provider);
-            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA",provider); //生成RSA钥匙对
-            keyPairGenerator.initialize(1024);
-            KeyPair keyPair = keyPairGenerator.genKeyPair();
             System.out.println(keyPair.getPublic().toString());
             System.out.println(keyPair.getPrivate   ().toString());
             Signature signature = Signature.getInstance("SHA256WithRSA",provider);  //进行签名
@@ -287,14 +267,11 @@ public class SignatureTest {
         }
     }
 
-    public static void SHA384WithRsa(){
+    public static void SHA384WithRsa(KeyPair keyPair){
         try{
             String data ="12345678912345612342141242131232";            //只能32位
             BaseProvider provider = new BaseProvider();
             Security.addProvider(provider);
-            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA",provider); //生成RSA钥匙对
-            keyPairGenerator.initialize(1024);
-            KeyPair keyPair = keyPairGenerator.genKeyPair();
             System.out.println(keyPair.getPublic().toString());
             System.out.println(keyPair.getPrivate   ().toString());
             Signature signature = Signature.getInstance("SHA384WithRSA",provider);  //进行签名
@@ -325,14 +302,11 @@ public class SignatureTest {
         }
     }
 
-    public static void SHA512WithRsa(){
+    public static void SHA512WithRsa(KeyPair keyPair){
         try{
             String data ="12345678912345612342141242131232";            //只能32位
             BaseProvider provider = new BaseProvider();
             Security.addProvider(provider);
-            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA",provider); //生成RSA钥匙对
-            keyPairGenerator.initialize(1024);
-            KeyPair keyPair = keyPairGenerator.genKeyPair();
             System.out.println(keyPair.getPublic().toString());
             System.out.println(keyPair.getPrivate   ().toString());
             Signature signature = Signature.getInstance("SHA512WithRSA",provider);  //进行签名

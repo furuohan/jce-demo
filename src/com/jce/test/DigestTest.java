@@ -10,8 +10,8 @@ import java.security.Security;
 
 public class DigestTest {
     public static void main(String[] args) {
-//        md5Test();
-        sm3Test();
+        md5Test();
+//        sm3Test();
 //        sha1Test();
 //        SHA224Test();
 //        SHA256Test();
