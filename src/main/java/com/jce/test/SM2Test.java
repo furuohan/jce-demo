@@ -1,4 +1,4 @@
-package jce.test;
+package com.jce.test;
 
 
 import com.keystore.SimpleKeyStore;
@@ -8,7 +8,6 @@ import com.util.BytesUtil;
 import javax.crypto.*;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.security.*;
 import java.util.Arrays;
 

@@ -1,17 +1,14 @@
-package jce.test;
+package com.jce.test;
 
 import com.keystore.SimpleKeyStore;
 import com.provider.BaseProvider;
 
-import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.security.KeyPair;
 import java.security.Security;
-import java.util.ArrayList;
-import java.util.List;
 
 public class SaveKeyTest {
     public static void main(String[] args) throws Exception{

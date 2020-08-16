@@ -1,4 +1,4 @@
-package jce.test;
+package com.jce.test;
 
 
 import com.keystore.SimpleKeyStore;
@@ -12,8 +12,7 @@ import java.io.FileInputStream;
 import java.security.Security;
 import java.util.Arrays;
 
-public class SSF33Test {
-
+public class AESTest {
     public static void main(String[] args) throws Exception {
 
         //需要加密的数据
@@ -24,15 +23,15 @@ public class SSF33Test {
 
         SecretKey readKey = readKey();
 
-        byte[] encrypts = encrypt("SSF33",plain,readKey,myprovider);
-        decrypt("SSF33",encrypts,readKey,myprovider);
+        byte[] encrypts = encrypt("AES",plain,readKey,myprovider);
+        decrypt("AES",encrypts,readKey,myprovider);
     }
 
 
 
     public static SecretKey genkey(BaseProvider myprovider) throws Exception{
         //获取钥匙对
-        KeyGenerator keyGenerator = KeyGenerator.getInstance("SSF33",myprovider);
+        KeyGenerator keyGenerator = KeyGenerator.getInstance("AES",myprovider);
         keyGenerator.init(128);
         SecretKey secretKey = keyGenerator.generateKey();
         return secretKey;
@@ -42,7 +41,7 @@ public class SSF33Test {
     public static SecretKey readKey ()throws Exception{
 
         SimpleKeyStore simpleKeyStore1 = SimpleKeyStore.load(new FileInputStream(new File("simple.keystore")), "111".toCharArray());
-        SimpleKeyStore.SecretKeyEntry entry = (SimpleKeyStore.SecretKeyEntry) simpleKeyStore1.getKeyEntry("alias-ssf33");
+        SimpleKeyStore.SecretKeyEntry entry = (SimpleKeyStore.SecretKeyEntry) simpleKeyStore1.getKeyEntry("alias-aes");
         SecretKey secretKey1 = entry.getSecretKey("123456".toCharArray());
         return secretKey1;
     }
@@ -64,5 +63,4 @@ public class SSF33Test {
         System.out.println("解密结果"+tResult.length + ":" + Arrays.toString(tResult));
 
     }
-
 }

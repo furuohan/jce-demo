@@ -1,4 +1,4 @@
-package jce.test;
+package com.jce.test;
 
 
 import com.provider.BaseProvider;

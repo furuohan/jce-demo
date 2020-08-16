@@ -1,11 +1,8 @@
-package jce.test;
+package com.jce.test;
 
 
-import com.keystore.JceKeyStore;
 import com.keystore.SimpleKeyStore;
 import com.provider.BaseProvider;
-import com.util.JCEConstant;
-import jdk.internal.util.xml.impl.Pair;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
